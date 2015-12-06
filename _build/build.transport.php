@@ -6,8 +6,6 @@ $mtime = $mtime[1] + $mtime[0];
 $tstart = $mtime;
 set_time_limit(0);
 
-header('Content-Type:text/html;charset=utf-8');
-
 require_once 'build.config.php';
 // Refresh model
 if (file_exists('build.model.php')) {
@@ -38,7 +36,7 @@ require_once $sources['build'] . '/includes/functions.php';
 $modx = new modX();
 $modx->initialize('mgr');
 $modx->setLogLevel(modX::LOG_LEVEL_INFO);
-$modx->setLogTarget('ECHO');
+$modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 $modx->getService('error', 'error.modError');
 $modx->loadClass('transport.modPackageBuilder', '', false, true);
 if (!XPDO_CLI_MODE) {
@@ -270,11 +268,12 @@ $builder->putVehicle($vehicle);
 $builder->setPackageAttributes(array(
 	'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
 	'license' => file_get_contents($sources['docs'] . 'license.txt'),
-	'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
-	'chunks' => $BUILD_CHUNKS,
-	'setup-options' => array(
+	'readme' => file_get_contents($sources['docs'] . 'readme.txt')
+	/*
+	,'setup-options' => array(
 		'source' => $sources['build'] . 'setup.options.php',
 	),
+	*/
 ));
 $modx->log(modX::LOG_LEVEL_INFO, 'Added package attributes and setup options.');
 
@@ -289,8 +288,8 @@ $tend = $mtime;
 $totalTime = ($tend - $tstart);
 $totalTime = sprintf("%2.4f s", $totalTime);
 
-$signature = $builder->getSignature();
 if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
+	$signature = $builder->getSignature();
 	$sig = explode('-', $signature);
 	$versionSignature = explode('.', $sig[1]);
 
@@ -326,9 +325,6 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
 	if ($package->install()) {
 		$modx->runProcessor('system/clearcache');
 	}
-}
-if (!empty($_GET['download'])) {
-	echo '<script>document.location.href = "/core/packages/' . $signature . '.transport.zip' . '";</script>';
 }
 
 $modx->log(modX::LOG_LEVEL_INFO, "\n<br />Execution time: {$totalTime}\n");
