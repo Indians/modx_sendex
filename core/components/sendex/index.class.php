@@ -16,14 +16,15 @@ abstract class SendexMainController extends modExtraManagerController {
 		require_once $corePath . 'model/sendex/sendex.class.php';
 
 		$this->Sendex = new Sendex($this->modx);
-		//$this->addCss($this->Sendex->config['cssUrl'] . 'mgr/main.css');
+
+		$this->addCss($this->Sendex->config['cssUrl'] . 'mgr/main.css');
 		$this->addJavascript($this->Sendex->config['jsUrl'] . 'mgr/sendex.js');
-		$this->addHtml('
-		<script type="text/javascript">
+		$this->addHtml('<script type="text/javascript">
+		Ext.onReady(function() {
 			Sendex.config = ' . $this->modx->toJSON($this->Sendex->config) . ';
 			Sendex.config.connector_url = "' . $this->Sendex->config['connectorUrl'] . '";
-		</script>
-		');
+		});
+		</script>');
 
 		parent::initialize();
 	}
