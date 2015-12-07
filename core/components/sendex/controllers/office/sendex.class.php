@@ -71,7 +71,7 @@ class officeModExtraController extends officeDefaultController {
 				MODX_ASSETS_URL . 'components/sendex/js/mgr/sendex.js',
 				MODX_ASSETS_URL . 'components/sendex/js/mgr/misc/utils.js',
 				MODX_ASSETS_URL . 'components/sendex/js/office/home.panel.js',
-				MODX_ASSETS_URL . 'components/sendex/js/office/items.grid.js',
+				MODX_ASSETS_URL . 'components/sendex/js/office/newsletters.grid.js',
 				MODX_ASSETS_URL . 'components/sendex/js/office/items.windows.js',
 				str_replace($config['pl'], $config['vl'], $js),
 			), 'sendex/all');

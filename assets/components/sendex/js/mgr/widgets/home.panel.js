@@ -1,33 +1,32 @@
 Sendex.panel.Home = function (config) {
 	config = config || {};
 	Ext.apply(config, {
+		border: false,
 		baseCls: 'modx-formpanel',
-		layout: 'anchor',
-		/*
-		 stateful: true,
-		 stateId: 'sendex-panel-home',
-		 stateEvents: ['tabchange'],
-		 getState:function() {return {activeTab:this.items.indexOf(this.getActiveTab())};},
-		 */
-		hideMode: 'offsets',
 		items: [{
 			html: '<h2>' + _('sendex') + '</h2>',
-			cls: '',
-			style: {margin: '15px 0'}
+			border: false,
+			cls: 'modx-page-header container'
 		}, {
 			xtype: 'modx-tabs',
-			defaults: {border: false, autoHeight: true},
+			bodyStyle: 'padding: 10px',
+			defaults: {
+				border: false,
+				autoHeight: true
+			},
 			border: true,
+			activeItem: 0,
 			hideMode: 'offsets',
 			items: [{
-				title: _('sendex_items'),
-				layout: 'anchor',
+				title: _('sendex_newsletters'),
 				items: [{
-					html: _('sendex_intro_msg'),
-					cls: 'panel-desc',
+					html: _('sendex_newsletters_intro'),
+					border: false,
+					bodyCssClass: 'panel-desc',
+					bodyStyle: 'margin-bottom: 10px'
 				}, {
-					xtype: 'sendex-grid-items',
-					cls: 'main-wrapper',
+					xtype: 'sendex-grid-newsletters',
+					preventRender: true
 				}]
 			}]
 		}]
