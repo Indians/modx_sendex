@@ -5,7 +5,7 @@ $properties = array();
 $tmp = array(
 	'tpl' => array(
 		'type' => 'textfield',
-		'value' => 'tpl.Sendex.item',
+		'value' => 'tpl.Sendex.newsletter',
 	),
 	'sortby' => array(
 		'type' => 'textfield',
